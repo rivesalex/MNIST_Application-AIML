@@ -23,7 +23,7 @@ def apply_midpoint(A):
     return B
 # Given two number midpoints: create a new matrix that allows them to be combined
 
-def combine_numbers(A1,A2,OFFSET=(0,0)):
+def combine_numbers(A1,A2,OFFSET=(0,0),debug=False):
     # We make the assumption that A1 and A2 are both of equal shape, and A1 is an (n x n) matrix
     
     n = A1.shape[0]
@@ -31,8 +31,8 @@ def combine_numbers(A1,A2,OFFSET=(0,0)):
     row_mid_1,col_mid_1 = get_midpoint(A1)
     row_mid_2,col_mid_2 = get_midpoint(A2)
     
-    row_shift = (row_mid_1 + 1) + row_offset + (n-(row_mid_2+1))-5
-    col_shift = (col_mid_1 + 1) + col_offset + (n-(col_mid_2+1))-5
+    row_shift = (row_mid_1 + 1) + row_offset + (n-(row_mid_2+1))-n
+    col_shift = (col_mid_1 + 1) + col_offset + (n-(col_mid_2+1))-n
     
     rows = n + abs(row_shift)
     cols = n + abs(col_shift)
@@ -64,5 +64,8 @@ def combine_numbers(A1,A2,OFFSET=(0,0)):
     M = np.zeros((rows,cols))
     M[row_a1_start:row_a1_end , col_a1_start:col_a1_end] += A1
     M[row_a2_start:row_a2_end , col_a2_start:col_a2_end] += A2
+    
+    if debug == True:
+        print(f'origin start {origin_start} row shift {row_shift} col shift {col_shift} rows {rows} cols {cols}')
 
     return M
